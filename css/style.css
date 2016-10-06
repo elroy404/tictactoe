@@ -54,3 +54,7 @@ div .fa-times{
   font-size: 150px;
   color: grey;
 }
+
+#gameboard{
+  display: none;
+}
