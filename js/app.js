@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  var placesTakenPosition, placesTakenPlayer = [];
+  var placesTakenPosition, placesTakenPlayer, placesO, placesX = [];
   var ex, oh, marker, player = '';
   var circle = '<i class="fa fa-circle-o" aria-hidden="true"></i>';
   var times = '<i class="fa fa-times" aria-hidden="true"></i>';
@@ -33,15 +33,22 @@ $(document).ready(function(){
     startGame();
     $("#gameboard").show();
     $("#question").hide();
+
   });
 
   //game gui
   $('#gameboard').on('click','div',function(){
     var squareId = this.id;
     playerTurn(squareId);
+    chickenDinner();
     // squareTaken(squareId);
+    console.log("Players placement: ");
     console.log(placesTakenPlayer);
-    console.log(placesTakenPosition);
+    console.log("O's: ");
+    console.log(placesO);
+    console.log("X's: ");
+    console.log(placesX);
+    // console.log(placesTakenPosition);
     $("#whos-turn").html("Player Turn: " + player);
   });
 
@@ -52,11 +59,16 @@ $(document).ready(function(){
     $(selectedId).html(marker);
     placesTakenPlayer.splice(squareIdNum,1,player);
     placesTakenPosition.push(squareIdNum);
+    if(player == "O"){
+      placesO.splice(squareIdNum,1,squareIdNum);
+    }
+    else if(player == "X"){
+      placesX.splice(squareIdNum,1,squareIdNum);
+    }
   }
 
   //switches which player is up
   function playerTurn(squareId){
-      console.log("before change:" + player);
       if(oh == true){
         marker = circle;
         storageContainer(squareId);
@@ -84,13 +96,18 @@ $(document).ready(function(){
     }
     placesTakenPosition = [];
     placesTakenPlayer = ["","","","","","","","",""];
+    placesO = ["","","","","","","","",""];
+    placesX = ["","","","","","","","",""];
     ex, oh, marker, player = '';
   }
 
   //decides who won the game
   function chickenDinner(){
+    var winningCombos = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                          [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
 
   }
+
 
   //checks if square was taken
   // function squareTaken(squareId){
@@ -113,11 +130,3 @@ $(document).ready(function(){
 
 
 });
-
-
-//push to start game
-  //center square button
-  //starts or clears counter to 0
-
-//counter 0 = O || <i class="fa fa-circle-o" aria-hidden="true"></i>
-//counter 1 = X || <i class="fa fa-times" aria-hidden="true"></i>
